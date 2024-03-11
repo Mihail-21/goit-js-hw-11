@@ -1,2 +1,27 @@
-import"./assets/styles-cd205bc4.js";import{f,i as h}from"./assets/vendor-77e16229.js";const d=document.querySelector("#datetime-picker"),r=document.querySelector("[data-start]");r.disabled=!0;let i;const p=t=>{const n=Math.floor(t/864e5),a=Math.floor(t%864e5/36e5),s=Math.floor(t%864e5%36e5/6e4),m=Math.floor(t%864e5%36e5%6e4/1e3);return S(n,a,s,m)},S=(t,o,e,c)=>{const u=document.querySelector("[data-days]"),n=document.querySelector("[data-hours]"),a=document.querySelector("[data-minutes]"),s=document.querySelector("[data-seconds]");u.textContent=t.toString().padStart(2,"0"),n.textContent=o.toString().padStart(2,"0"),a.textContent=e.toString().padStart(2,"0"),s.textContent=c.toString().padStart(2,"0")},g=()=>{h.error({class:"popup-message",theme:"dark",backgroundColor:"#ef4040",messageColor:"#fff",position:"topRight",pauseOnHover:!0,timeout:3e3,message:"Please choose a date in the future"})};r.addEventListener("click",()=>{d.disabled=!0,r.disabled=!0;const t=setInterval(()=>{const o=Date.now(),e=i-o;p(e),e<=1e3&&(clearInterval(t),d.disabled=!1)},1e3)});const l={enableTime:!0,time_24hr:!0,defaultDate:new Date,minuteIncrement:1,dateFormat:"Y-m-d H:i",onClose(t){t[0]<l.defaultDate?g():(i=t[0],r.disabled=!1)}};f(d,l);
+import{S as p,i as c}from"./assets/vendor-5b791d57.js";(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))s(e);new MutationObserver(e=>{for(const o of e)if(o.type==="childList")for(const n of o.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&s(n)}).observe(document,{childList:!0,subtree:!0});function t(e){const o={};return e.integrity&&(o.integrity=e.integrity),e.referrerPolicy&&(o.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?o.credentials="include":e.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function s(e){if(e.ep)return;e.ep=!0;const o=t(e);fetch(e.href,o)}})();function m(i){const r={KEYWORD:"nature",IMAGE_TYPE:"photo",SAFESEARCH:"true",ORIENTATION:"horizontal",API_KEY:"42458886-d6d62fa6987d6f72b0a5e97bb",URL:"https://pixabay.com/api/"},t=`${r.URL}?key=${r.API_KEY}&q=${i}&image_type=${r.IMAGE_TYPE}&safesearch=${r.SAFESEARCH}&orientation=${r.ORIENTATION}`;return fetch(t).then(s=>{if(!s.ok)throw new Error(s.status);return s.json()}).then(s=>{if(s&&s.hits)return s})}function y(i){const r=document.querySelector(".list");if(!r){console.error("Gallery element not found");return}const t=i.hits.slice(0,9);r.innerHTML=t.map(({webformatURL:s,largeImageURL:e,tags:o,likes:n,views:u,comments:d,downloads:f})=>`
+        <li class="gallery-item">
+          <div class="gallery-box item-card-wrapper">
+            <a class="gallery-link" href="${e}">
+              <img class="gallery-img" src="${s}" alt="${o}" loading="lazy">
+            </a>
+            <div class="card-box">
+              <div>
+                <p class="card-box-text"><b>Likes</b></p>
+                <p class="card-box-text">${n}</p>
+              </div>
+              <div>
+                <p class="card-box-text"><b>Views</b></p>
+                <p class="card-box-text">${u}</p>
+              </div>
+              <div>
+                <p class="card-box-text"><b>Comments</b></p>
+                <p class="card-box-text">${d}</p>
+              </div>
+              <div>
+                <p class="card-box-text"><b>Downloads</b></p>
+                <p class="card-box-text">${f}</p>
+              </div>
+            </div>
+          </div>
+        </li>`).join("")}const g=new p(".gallery a",{captionsData:"alt",captionDelay:250}),a=document.querySelector(".form");document.querySelector(".list");const l=document.querySelector(".loader");a.addEventListener("submit",h);l.style.display="none";function h(i){i.preventDefault();const r=a.elements.query.value.trim();if(r===""){c.warning({message:"Please enter a search query.",messageColor:"black",backgroundColor:"#ffac26",position:"topRight",pauseOnHover:!1,progressBarColor:"black",timeout:3e3});return}l.style.display="block",m(r).then(t=>{if(t&&t.hits&&t.hits.length>0)return t}).then(t=>{y(t),g.refresh()}).catch(t=>c.error({theme:"dark",message:"Sorry, there are no images matching your search query. Please try again!",messageColor:"#ffffff",backgroundColor:"#ef4040",position:"topRight",pauseOnHover:!1,progressBarColor:"#b51b1b",timeout:3e3})).finally(()=>{l.style.display="none",a.reset()})}
 //# sourceMappingURL=commonHelpers.js.map
